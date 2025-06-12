@@ -162,11 +162,22 @@
   </style>
 </head>
 <body>
-  <div class="heart"></div>
-  <div class="heart"></div>
-  <div class="heart"></div>
-  <div class="heart"></div>
-  <div class="heart"></div>
+    <div class="heart" style="top:10%; left:20%; animation-duration:9s;"></div>
+  <div class="heart" style="top:40%; left:70%; animation-duration:7.5s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:75%; left:35%; animation-duration:8.5s;"></div>
+  <div class="heart" style="top:25%; left:80%; animation-duration:10s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:60%; left:15%; animation-duration:7s;"></div>
+  <div class="heart" style="top:5%; left:50%; animation-duration:8s;"></div>
+  <div class="heart" style="top:85%; left:65%; animation-duration:9.5s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:30%; left:10%; animation-duration:7.8s;"></div>
+  <div class="heart" style="top:55%; left:85%; animation-duration:8.7s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:20%; left:45%; animation-duration:9.3s;"></div>
+  <div class="heart" style="top:70%; left:75%; animation-duration:7.4s;"></div>
+  <div class="heart" style="top:50%; left:30%; animation-duration:8.1s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:15%; left:60%; animation-duration:9.7s;"></div>
+  <div class="heart" style="top:80%; left:20%; animation-duration:7.2s; animation-direction:reverse;"></div>
+  <div class="heart" style="top:35%; left:40%; animation-duration:8.9s;"></div>
+
 
   <h1>Введи ключ, чтобы получить послание 💌✨</h1>
   <input type="password" id="keyInput" placeholder="Твой секретный ключ" autocomplete="off" />
@@ -177,7 +188,7 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script>
-    const encrypted = "U2FsdGVkX1/3oE+8h5ozW5l7avECbZrQo6j9l+F0lsD6K3U0aK0aH9IPKzABbAlKDN5oGeEtZ+YyKTXzR1Mykd1MeVNmhHZ27HFYlQ9aQ4Yz7+taLZrScJURt+yMP2+TxAA+If6FuI+5YiCOfbxIUsG5fLn3U5gFdZgWzM7j9FBLU=";
+    const encrypted = "U2FsdGVkX1+tE7MdWc42k/GWvtS3DloHr3amCE9/D2ImNqTBS7IqPjjQ8eSbhTFUOQi/h1QVqn4pZpGmlqghxEiQ6O1iVK3FrdUV8hZJNEQs/cgzflr8HUqhZjs7SHnO6/FKAQFI5xcQuL138SNutJbhx36KdRS6YTYDKbHCbORfwgf9iSiekYy4tZxktFlXyXTLIJ1Iu707MhK+O7+spxe2nQdi9bGCovhy0dzV9y/b2Xlz4LQaV59FKVPo9eiVL8N3QfGfxWwm8d0cu3rKew8t4szN7ZyoVEF+yCRBQM8kkL3NDegSEi8rH41xX3DhYHuqLj+lWPoO68H789tCCpX0zkFifWpz9JdL5mjY/nbmBFDBTxWgy+8B/KUElNzIg+dHunNQW/FG4s+496az4lhggcizGid8sns+uvt6jNNek3GPQliXz89if+ET97Fz/ac9dBVY+GQx8kMEuk19bEns2SKeO7Ts1fj9bwbzjObqNlxTo2A/T8UAlFePYqUwiNsrOh18Pl2bLYmjH9PhoTp96vGj62bMXXuxXl9xIEIcr1fnv8j2Q8sbSJHNysYZu6Mt0RwyrxRqQ2CHeuBp3YY2lvaAZhxa7IBtPqfjfcpBAI+yGE3jcRNTtReIfvOaJauqnrO/c0kxkYSVm/eUpa8TbMnQQdvY+OSbwQapi1E8j8FbtUM6b1+qY26Ddg05n/qcvxsgbGDDxqVE62KSReloDJoMX3n4oJKCvI+4geAzcRMNdnYdcQhVBQLPpkIaQEEyArAI/YHKdccnbnCsrouEIsgZbxxtJ1e5zCYK4Dyqf6IykIceg14wWs002wN5nbB7hIsWHH7G4IItkV3mrbPLBAfXt953hDGzQTgFffwGvwAfmo9TvGXNcKg8IxA3drmGkxzu4vGF9uZEZcfyBaBM4PkFED9woXkdJ+rcx9/AeX99PEErnL+16Ncs3VTMSCy9TYdr0qH2jMCANCvTKv3xAGrKjfF5lVbVqeGZuViYG3EAnQwYELoB3p5KMsXnWy1GTtMaD6zqpVx1TRKz/eUlWKH5CB91J9t3Z/Ug9vv8LrgdnxJ45G3GlC2hgWhqTPZwVh0RGXx/emu7ESRf7j89PFS8lAsdlS0g4rtXyxVLctALRmTPOjKhQp9o/rgEj0C6Ct9T9QVbOTn0nw0qOyJvnJ+VVbb/P2JA+7nB7ct4nhdgRNF324dq8qXg3FZvtnnvYRtP+cE7PBSVjqQKb4sowDkdb/SLZs7yGYS+rAer/ChXKzEq1J5ELym8oG38TZhod9qYYt8tVSRBhOeyfhGrjCJ+sOXE+brUrPALsZ8HgujVWx7jNZJPiwaj4VvDmJopf0L9CWRBcKSQ0RugmRRJidmV3JQfJE7XYjpihuKdyZywZzRuSzaK3rtdFptvefbk/L0J+EN2wdWm2Yg1jXFZyudN7LBNkLsV77NuSDuIZDippxrz4eyqMRgCxAXMALg0Ich9UAGK/yRCuJPWfkxIrQP7gKbst3/cHLBRJ7EvtdlNvc5FB1zItmonu/dhM5IlBfOHERUCjuGH0Bqz4w==";
 
     async function decryptMessage() {
       const key = document.getElementById('keyInput').value.trim().toLowerCase();
