@@ -94,7 +94,6 @@
       padding: 1.5rem;
       border-radius: 20px;
       font-family: 'Poppins', sans-serif;
-
       max-width: 320px;
       white-space: pre-wrap;
       font-size: 1.1rem;
@@ -102,6 +101,15 @@
       user-select: text;
       display: none;
       color: #80224d;
+      opacity: 0;
+      transform: scale(0.5);
+      transition: opacity 1s ease, transform 1s ease;
+      position: relative;
+    }
+
+    #message.show {
+      opacity: 1;
+      transform: scale(1);
     }
 
     .error {
@@ -176,6 +184,60 @@
         padding: 1rem;
       }
     }
+
+    .heart-explosion {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 200px;
+      height: 200px;
+      pointer-events: none;
+      z-index: 1000;
+      display: none;
+    }
+
+    .heart-explosion .particle {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      background: #ff69b4;
+      clip-path: polygon(
+        50% 0%, 61% 12%, 70% 12%, 79% 22%, 79% 34%, 
+        72% 44%, 50% 70%, 28% 44%, 21% 34%, 21% 22%, 
+        30% 12%, 39% 12%
+      );
+      opacity: 0;
+    }
+
+    @keyframes explode {
+      0% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(0);
+        opacity: 0;
+      }
+    }
+
+    @keyframes particle {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+        opacity: 1;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--tx), var(--ty)) rotate(360deg);
+        opacity: 0;
+      }
+    }
   </style>
 </head>
 <body>
@@ -195,6 +257,7 @@
   <div class="heart" style="top:80%; left:20%; animation-duration:7.2s; animation-direction:reverse;"></div>
   <div class="heart" style="top:35%; left:40%; animation-duration:8.9s;"></div>
 
+  <div id="heartExplosion" class="heart-explosion"></div>
 
   <h1>Введи ключ, чтобы получить послание 💌✨</h1>
   <input type="password" id="keyInput" placeholder="Твой секретный ключ" autocomplete="off" />
@@ -207,6 +270,37 @@
   <script>
     const encrypted = "U2FsdGVkX1+tE7MdWc42k/GWvtS3DloHr3amCE9/D2ImNqTBS7IqPjjQ8eSbhTFUOQi/h1QVqn4pZpGmlqghxEiQ6O1iVK3FrdUV8hZJNEQs/cgzflr8HUqhZjs7SHnO6/FKAQFI5xcQuL138SNutJbhx36KdRS6YTYDKbHCbORfwgf9iSiekYy4tZxktFlXyXTLIJ1Iu707MhK+O7+spxe2nQdi9bGCovhy0dzV9y/b2Xlz4LQaV59FKVPo9eiVL8N3QfGfxWwm8d0cu3rKew8t4szN7ZyoVEF+yCRBQM8kkL3NDegSEi8rH41xX3DhYHuqLj+lWPoO68H789tCCpX0zkFifWpz9JdL5mjY/nbmBFDBTxWgy+8B/KUElNzIg+dHunNQW/FG4s+496az4lhggcizGid8sns+uvt6jNNek3GPQliXz89if+ET97Fz/ac9dBVY+GQx8kMEuk19bEns2SKeO7Ts1fj9bwbzjObqNlxTo2A/T8UAlFePYqUwiNsrOh18Pl2bLYmjH9PhoTp96vGj62bMXXuxXl9xIEIcr1fnv8j2Q8sbSJHNysYZu6Mt0RwyrxRqQ2CHeuBp3YY2lvaAZhxa7IBtPqfjfcpBAI+yGE3jcRNTtReIfvOaJauqnrO/c0kxkYSVm/eUpa8TbMnQQdvY+OSbwQapi1E8j8FbtUM6b1+qY26Ddg05n/qcvxsgbGDDxqVE62KSReloDJoMX3n4oJKCvI+4geAzcRMNdnYdcQhVBQLPpkIaQEEyArAI/YHKdccnbnCsrouEIsgZbxxtJ1e5zCYK4Dyqf6IykIceg14wWs002wN5nbB7hIsWHH7G4IItkV3mrbPLBAfXt953hDGzQTgFffwGvwAfmo9TvGXNcKg8IxA3drmGkxzu4vGF9uZEZcfyBaBM4PkFED9woXkdJ+rcx9/AeX99PEErnL+16Ncs3VTMSCy9TYdr0qH2jMCANCvTKv3xAGrKjfF5lVbVqeGZuViYG3EAnQwYELoB3p5KMsXnWy1GTtMaD6zqpVx1TRKz/eUlWKH5CB91J9t3Z/Ug9vv8LrgdnxJ45G3GlC2hgWhqTPZwVh0RGXx/emu7ESRf7j89PFS8lAsdlS0g4rtXyxVLctALRmTPOjKhQp9o/rgEj0C6Ct9T9QVbOTn0nw0qOyJvnJ+VVbb/P2JA+7nB7ct4nhdgRNF324dq8qXg3FZvtnnvYRtP+cE7PBSVjqQKb4sowDkdb/SLZs7yGYS+rAer/ChXKzEq1J5ELym8oG38TZhod9qYYt8tVSRBhOeyfhGrjCJ+sOXE+brUrPALsZ8HgujVWx7jNZJPiwaj4VvDmJopf0L9CWRBcKSQ0RugmRRJidmV3JQfJE7XYjpihuKdyZywZzRuSzaK3rtdFptvefbk/L0J+EN2wdWm2Yg1jXFZyudN7LBNkLsV77NuSDuIZDippxrz4eyqMRgCxAXMALg0Ich9UAGK/yRCuJPWfkxIrQP7gKbst3/cHLBRJ7EvtdlNvc5FB1zItmonu/dhM5IlBfOHERUCjuGH0Bqz4w==";
 
+    function createHeartExplosion() {
+      const message = document.getElementById('message');
+      const explosion = document.getElementById('heartExplosion');
+      explosion.innerHTML = '';
+      explosion.style.display = 'block';
+
+      // Создаем центральное сердце
+      const centerHeart = document.createElement('div');
+      centerHeart.className = 'particle';
+      centerHeart.style.animation = 'explode 1.5s ease-out forwards';
+      explosion.appendChild(centerHeart);
+
+      // Создаем частицы
+      for (let i = 0; i < 12; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const angle = (i * 30) * Math.PI / 180;
+        const distance = 150;
+        const tx = Math.cos(angle) * distance;
+        const ty = Math.sin(angle) * distance;
+        particle.style.setProperty('--tx', `${tx}px`);
+        particle.style.setProperty('--ty', `${ty}px`);
+        particle.style.animation = `particle 2s ease-out forwards`;
+        explosion.appendChild(particle);
+      }
+
+      setTimeout(() => {
+        explosion.style.display = 'none';
+      }, 2000);
+    }
+
     async function decryptMessage() {
       const key = document.getElementById('keyInput').value.trim().toLowerCase();
       if (!key) {
@@ -218,8 +312,17 @@
         const decrypted = await CryptoJS.AES.decrypt(encrypted, key);
         const result = decrypted.toString(CryptoJS.enc.Utf8);
         if (!result) throw new Error();
-        document.getElementById('message').textContent = "🎉 " + result + " 🎉";
-        document.getElementById('message').style.display = 'block';
+        
+        const message = document.getElementById('message');
+        message.textContent = "🎉 " + result + " 🎉";
+        message.style.display = 'block';
+        
+        createHeartExplosion();
+        
+        setTimeout(() => {
+          message.classList.add('show');
+        }, 1000);
+        
         document.getElementById('error').textContent = '';
       } catch {
         document.getElementById('error').textContent = 'Неверный ключ. Попробуй ещё раз 😕';
