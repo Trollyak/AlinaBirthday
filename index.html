@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Для Алины</title>
+  <style>
+    body {
+      background-color: #fbeff7;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    input, button {
+      padding: 0.5rem 1rem;
+      margin: 0.5rem;
+      font-size: 1rem;
+    }
+    #message {
+      margin-top: 2rem;
+      padding: 1rem;
+      border-radius: 8px;
+      background: white;
+      max-width: 600px;
+      display: none;
+      white-space: pre-wrap;
+    }
+    .error {
+      color: red;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <h1>Введи ключ, чтобы получить послание</h1>
+  <input type="password" id="keyInput" placeholder="Твой секретный ключ" />
+  <button onclick="decryptMessage()">Расшифровать</button>
+  <div id="message"></div>
+  <div id="error" class="error"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    const encrypted = "U2FsdGVkX19HtAh6qC9NQX5Xjc8h2WeVtVDEKyfsukv4lHwtVR53gVwmuVpJ5ubpx31HKO5TTl7nsWD+23W3J3jg0/iuwivkA4rQXkh46bHqXEEJCdXSq+Hex4r+pZ173hzN/6hN7cTmqcuI5HdQ8TSPlP2uxCrxI72c1y5PaO9ie3q+i3u3Pdl5BDnG3dyPDZiZ9YqcAmRUU4EH6c2cpIEHY1SsiLDgriJV6CAgey1obEjpBinYeylk0b+iuRRHlD/uptADlNuFZKXQz1sX++jfLbL3wrhO6lw9cKi9zoKeKNPIoV4Rv2h3n5R7FZxFrWFtNKv8Qxup2Avt6lMxlqSnskxgkLiLG0HMCJmXSGby0cqv929JMsinvDf9SplUABdBAfUfwGz2zwhvqXZTvo+ydLXo4M9O2e0gDyv68FCRM+6LCn7g8BV0wtSk9tC+RvEMWgNbMXHySS2JFno7h23wPYB03yWa6oWJ9E1zVgAXxkURsk+td4Bn9oizoD2ZXV6vvAkYF9PGPj67s0xcZs6bsO8NEcjRLiypu3maVYJNR4nPv3ZNtrthckbigbYh2uRBPX1emmpXPImvZmr+1WMLJjTTg3JqI0uHUNh2Q8agRxS06Z6QRFMyD2eJaOx8cvRpUKpnVuHvPaUBqIKIdv4w9xYF8xhEGoWmJ9iMkrXQfgwZqK7xeF+d80ypnqyGYXM12yrTEmN1CqvTEZ6bSZI/jcoJvcRN0fdPtJrnYCjit1HSJX1otE+iDJn9/q5dyK0AXtz/DAr1ROU1p1DFM6w7UuGMmTMuzbGjeQKYFYaESinHVj7wK8iH8Ay1qKyjtvXff7PDhPKkkXElzpCK4RX9ff1KK7Z69/dUN1DYiPdHKL+ZsP2ZlWWZyPHyXahYpA5+1ra8QG76G2xjRYnbvR+91Mgyuu+1OfKPm5wHsjMWbA02QtEEQGkTXRphU8pv1fBF+K8bboQg7MyH03vtYwQQaYxDmYIFv4IbwDpwY3VPP/dCk57AGofbgXlaQv4qidQfNihrJT1rpYzk3UU+PgeV1UfxPAO7ba2J5QMMVKB8EPINP2GqTAwAYxarFZyp4MCkTb+G2b+O+uFoIDzPZjJeE7etp1cJeBQQU7Yuy+btOAk6r38k7aZr2htCbk+drSWOomXX2tgP3r9y/cFkA3sAG5Esw5bZh9u5Ckzl5r932tSPvmp/yTS5vWbwAtmLBtRv7E7imuHG0uYqzecq22icaWLOTEY8JgxBNab4JiCzQtvD8PeDt7a36R7jE13xosvk4P5T/X7N9Q7MhDvd2nbvmlgYNoS2eJNFrZUf4ZM7CheLsW5FSgYe8HcefoPIaZ/uFSNgxFFGmhq/lQtZnKm0xsGnMVEL+gyR5+lrHd8RxVWBzaKl8j+MbCinph9sVkxw6XHAkmNR7M1A3zhh+cR0m5sq4XHJkVXaK0se6i/JrOHtEcvA1FrZVOrHZuKBs0nZAuZnDs/RQEYxNhqsuV+pnWXkKV6pn73vQ2JcUnC1CkTahTMRYE0rLYET1Fgeqytu0crKPk8q2RPxkj24MQ==";
+
+    async function decryptMessage() {
+      const key = document.getElementById('keyInput').value;
+      try {
+        const decrypted = await CryptoJS.AES.decrypt(encrypted, key);
+        const result = decrypted.toString(CryptoJS.enc.Utf8);
+        if (!result) throw new Error();
+        document.getElementById('message').textContent = result;
+        document.getElementById('message').style.display = 'block';
+        document.getElementById('error').textContent = '';
+      } catch {
+        document.getElementById('error').textContent = 'Неверный ключ. Попробуй ещё раз.';
+        document.getElementById('message').style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
