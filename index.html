@@ -2,65 +2,199 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <title>Для Алины</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Для Алины 💖</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+    /* Базовые стили и адаптив */
     body {
-      background-color: #fbeff7;
-      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0 1rem;
+      height: 100vh;
+      background: #ffe4e6;
+      font-family: 'Montserrat', sans-serif;
       display: flex;
       flex-direction: column;
-      align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      padding: 2rem;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+      color: #5a2a2a;
+      position: relative;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+
+    input, button {
+      font-size: 1.1rem;
+      padding: 0.7rem 1.2rem;
+      margin: 0.4rem 0;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      box-shadow: 0 3px 8px rgba(255, 105, 180, 0.3);
+      transition: box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    input {
+      background: #fff0f6;
+      color: #a8325f;
+      font-weight: 600;
+      letter-spacing: 1.2px;
       text-align: center;
     }
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
+
+    input::placeholder {
+      color: #d97a9c;
+      font-weight: 500;
     }
-    input, button {
-      padding: 0.5rem 1rem;
-      margin: 0.5rem;
-      font-size: 1rem;
+
+    input:focus {
+      box-shadow: 0 3px 12px #ff69b4;
     }
+
+    button {
+      background: #ff4da6;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      text-transform: uppercase;
+    }
+
+    button:hover {
+      background: #e03e8e;
+      box-shadow: 0 6px 15px #ff4da6;
+    }
+
     #message {
       margin-top: 2rem;
-      padding: 1rem;
-      border-radius: 8px;
       background: white;
-      max-width: 600px;
-      display: none;
+      padding: 1.5rem;
+      border-radius: 20px;
+      max-width: 320px;
       white-space: pre-wrap;
+      font-size: 1.1rem;
+      box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+      user-select: text;
+      display: none;
+      color: #80224d;
     }
+
     .error {
-      color: red;
       margin-top: 1rem;
+      color: #d8406b;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    /* Анимация сердечек на фоне */
+    .heart {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: #ff69b4;
+      clip-path: polygon(
+        50% 0%, 61% 12%, 70% 12%, 79% 22%, 79% 34%, 
+        72% 44%, 50% 70%, 28% 44%, 21% 34%, 21% 22%, 
+        30% 12%, 39% 12%
+      );
+      animation: spin 8s linear infinite;
+      opacity: 0.15;
+      filter: drop-shadow(0 0 3px #ff69b4);
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg) translateX(0) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+    }
+
+    /* Разные позиции и скорости для сердечек */
+    .heart:nth-child(1) {
+      top: 10%;
+      left: 20%;
+      animation-duration: 9s;
+    }
+    .heart:nth-child(2) {
+      top: 40%;
+      left: 70%;
+      animation-duration: 7.5s;
+      animation-direction: reverse;
+    }
+    .heart:nth-child(3) {
+      top: 75%;
+      left: 35%;
+      animation-duration: 8.5s;
+    }
+    .heart:nth-child(4) {
+      top: 25%;
+      left: 80%;
+      animation-duration: 10s;
+      animation-direction: reverse;
+    }
+    .heart:nth-child(5) {
+      top: 60%;
+      left: 15%;
+      animation-duration: 7s;
+    }
+
+    /* Адаптация для мелких экранов */
+    @media (max-width: 400px) {
+      h1 {
+        font-size: 1.6rem;
+      }
+      input, button, #message {
+        max-width: 100%;
+        font-size: 1rem;
+      }
+      #message {
+        padding: 1rem;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Введи ключ, чтобы получить послание</h1>
-  <input type="password" id="keyInput" placeholder="Твой секретный ключ" />
-  <button onclick="decryptMessage()">Расшифровать</button>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+  <div class="heart"></div>
+
+  <h1>Введи ключ, чтобы получить послание 💌✨</h1>
+  <input type="password" id="keyInput" placeholder="Твой секретный ключ" autocomplete="off" />
+  <button onclick="decryptMessage()">Расшифровать 💖</button>
+  
   <div id="message"></div>
   <div id="error" class="error"></div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
   <script>
-    const encrypted = "U2FsdGVkX19HtAh6qC9NQX5Xjc8h2WeVtVDEKyfsukv4lHwtVR53gVwmuVpJ5ubpx31HKO5TTl7nsWD+23W3J3jg0/iuwivkA4rQXkh46bHqXEEJCdXSq+Hex4r+pZ173hzN/6hN7cTmqcuI5HdQ8TSPlP2uxCrxI72c1y5PaO9ie3q+i3u3Pdl5BDnG3dyPDZiZ9YqcAmRUU4EH6c2cpIEHY1SsiLDgriJV6CAgey1obEjpBinYeylk0b+iuRRHlD/uptADlNuFZKXQz1sX++jfLbL3wrhO6lw9cKi9zoKeKNPIoV4Rv2h3n5R7FZxFrWFtNKv8Qxup2Avt6lMxlqSnskxgkLiLG0HMCJmXSGby0cqv929JMsinvDf9SplUABdBAfUfwGz2zwhvqXZTvo+ydLXo4M9O2e0gDyv68FCRM+6LCn7g8BV0wtSk9tC+RvEMWgNbMXHySS2JFno7h23wPYB03yWa6oWJ9E1zVgAXxkURsk+td4Bn9oizoD2ZXV6vvAkYF9PGPj67s0xcZs6bsO8NEcjRLiypu3maVYJNR4nPv3ZNtrthckbigbYh2uRBPX1emmpXPImvZmr+1WMLJjTTg3JqI0uHUNh2Q8agRxS06Z6QRFMyD2eJaOx8cvRpUKpnVuHvPaUBqIKIdv4w9xYF8xhEGoWmJ9iMkrXQfgwZqK7xeF+d80ypnqyGYXM12yrTEmN1CqvTEZ6bSZI/jcoJvcRN0fdPtJrnYCjit1HSJX1otE+iDJn9/q5dyK0AXtz/DAr1ROU1p1DFM6w7UuGMmTMuzbGjeQKYFYaESinHVj7wK8iH8Ay1qKyjtvXff7PDhPKkkXElzpCK4RX9ff1KK7Z69/dUN1DYiPdHKL+ZsP2ZlWWZyPHyXahYpA5+1ra8QG76G2xjRYnbvR+91Mgyuu+1OfKPm5wHsjMWbA02QtEEQGkTXRphU8pv1fBF+K8bboQg7MyH03vtYwQQaYxDmYIFv4IbwDpwY3VPP/dCk57AGofbgXlaQv4qidQfNihrJT1rpYzk3UU+PgeV1UfxPAO7ba2J5QMMVKB8EPINP2GqTAwAYxarFZyp4MCkTb+G2b+O+uFoIDzPZjJeE7etp1cJeBQQU7Yuy+btOAk6r38k7aZr2htCbk+drSWOomXX2tgP3r9y/cFkA3sAG5Esw5bZh9u5Ckzl5r932tSPvmp/yTS5vWbwAtmLBtRv7E7imuHG0uYqzecq22icaWLOTEY8JgxBNab4JiCzQtvD8PeDt7a36R7jE13xosvk4P5T/X7N9Q7MhDvd2nbvmlgYNoS2eJNFrZUf4ZM7CheLsW5FSgYe8HcefoPIaZ/uFSNgxFFGmhq/lQtZnKm0xsGnMVEL+gyR5+lrHd8RxVWBzaKl8j+MbCinph9sVkxw6XHAkmNR7M1A3zhh+cR0m5sq4XHJkVXaK0se6i/JrOHtEcvA1FrZVOrHZuKBs0nZAuZnDs/RQEYxNhqsuV+pnWXkKV6pn73vQ2JcUnC1CkTahTMRYE0rLYET1Fgeqytu0crKPk8q2RPxkj24MQ==";
+    const encrypted = "U2FsdGVkX1/3oE+8h5ozW5l7avECbZrQo6j9l+F0lsD6K3U0aK0aH9IPKzABbAlKDN5oGeEtZ+YyKTXzR1Mykd1MeVNmhHZ27HFYlQ9aQ4Yz7+taLZrScJURt+yMP2+TxAA+If6FuI+5YiCOfbxIUsG5fLn3U5gFdZgWzM7j9FBLU=";
 
     async function decryptMessage() {
-      const key = document.getElementById('keyInput').value;
+      const key = document.getElementById('keyInput').value.trim().toLowerCase();
+      if (!key) {
+        document.getElementById('error').textContent = 'Пожалуйста, введи ключ 🔑';
+        document.getElementById('message').style.display = 'none';
+        return;
+      }
       try {
         const decrypted = await CryptoJS.AES.decrypt(encrypted, key);
         const result = decrypted.toString(CryptoJS.enc.Utf8);
         if (!result) throw new Error();
-        document.getElementById('message').textContent = result;
+        document.getElementById('message').textContent = "🎉 " + result + " 🎉";
         document.getElementById('message').style.display = 'block';
         document.getElementById('error').textContent = '';
       } catch {
-        document.getElementById('error').textContent = 'Неверный ключ. Попробуй ещё раз.';
+        document.getElementById('error').textContent = 'Неверный ключ. Попробуй ещё раз 😕';
         document.getElementById('message').style.display = 'none';
       }
     }
